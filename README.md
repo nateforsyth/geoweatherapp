@@ -9,7 +9,11 @@ This is a simple **Xamarin** UI which for uses the **Google Location Services** 
 
 This project has been created to interface with a **Wunderground** library being written by students from Computer Power Plus in Christchurch, New Zealand.
 
-##More information
+## Notes
+
+This project was created using Xamarin 3.11.666.0, Xamarin.Android 5.1.4.16, and Visual Studio 2015 RC. You will need your own Google API Key of you want to make use of this project.
+
+## More information
 
 If you want to see what else I am up to you can always check out <a href="http://www.dreamsof.net/Posts/Blog/">my blog</a>
 
