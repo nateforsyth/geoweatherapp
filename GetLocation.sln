@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetLocation", "GetLocation\GetLocation.csproj", "{94D0232C-3AE7-40AF-8E34-68B18C31B794}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WundergroundNetLib", "..\..\..\Collaboration\WundergroundNetLib_XamarinUI\WundergroundNetLib\WundergroundNetLib.csproj", "{9A1B633B-A546-4024-8380-E64A1D271168}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WundergroundNetLib.Interfaces", "..\..\..\Collaboration\WundergroundNetLib_XamarinUI\WundergroundNetLib.Interfaces\WundergroundNetLib.Interfaces.csproj", "{E8746B6D-72D9-4152-BA6D-28007A594C13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +21,14 @@ Global
 		{94D0232C-3AE7-40AF-8E34-68B18C31B794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94D0232C-3AE7-40AF-8E34-68B18C31B794}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94D0232C-3AE7-40AF-8E34-68B18C31B794}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9A1B633B-A546-4024-8380-E64A1D271168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1B633B-A546-4024-8380-E64A1D271168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1B633B-A546-4024-8380-E64A1D271168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1B633B-A546-4024-8380-E64A1D271168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8746B6D-72D9-4152-BA6D-28007A594C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8746B6D-72D9-4152-BA6D-28007A594C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8746B6D-72D9-4152-BA6D-28007A594C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8746B6D-72D9-4152-BA6D-28007A594C13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
