@@ -63,11 +63,11 @@ namespace GetLocation
 			// aapt resource value: 0x7f050002
 			public const int address_text = 2131034114;
 			
+			// aapt resource value: 0x7f050001
+			public const int btnGetAddress = 2131034113;
+			
 			// aapt resource value: 0x7f05000a
 			public const int btnGetWeather = 2131034122;
-			
-			// aapt resource value: 0x7f050001
-			public const int get_address_button = 2131034113;
 			
 			// aapt resource value: 0x7f050004
 			public const int latitudeLayout = 2131034116;
