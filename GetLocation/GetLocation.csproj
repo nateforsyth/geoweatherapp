@@ -70,6 +70,16 @@
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Collaboration\WundergroundNetLib_XamarinUI\WundergroundNetLib.Interfaces\WundergroundNetLib.Interfaces.csproj">
+      <Project>{e8746b6d-72d9-4152-ba6d-28007a594c13}</Project>
+      <Name>WundergroundNetLib.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Collaboration\WundergroundNetLib_XamarinUI\WundergroundNetLib\WundergroundNetLib.csproj">
+      <Project>{9a1b633b-a546-4024-8380-e64a1d271168}</Project>
+      <Name>WundergroundNetLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.

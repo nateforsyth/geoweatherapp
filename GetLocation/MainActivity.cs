@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using WundergroundNetLib.Interfaces;
+using WundergroundNetLib;
+
 namespace GetLocation
 {
     [Activity(Label = "GetLocation", MainLauncher = true, Icon = "@drawable/icon")]
@@ -21,7 +24,7 @@ namespace GetLocation
         TextView _addressText;
         EditText latInput;
         EditText longInput;
-        TextView fakeAddress;
+        TextView weatherOutput;
         String _locationProvider;
 
         // collections
@@ -41,15 +44,14 @@ namespace GetLocation
             // code to fake the address using user entered lat and long values
             latInput = FindViewById<EditText>(Resource.Id.txtLatInput);
             longInput = FindViewById<EditText>(Resource.Id.txtLongInput);
-            fakeAddress = FindViewById<TextView>(Resource.Id.fake_address_text);
-            FindViewById<TextView>(Resource.Id.btnFakeAddress).Click += FakeAddressButton_OnClick;
+            weatherOutput = FindViewById<TextView>(Resource.Id.txtWeatherText);
+            FindViewById<TextView>(Resource.Id.btnGetWeather).Click += GetWeatherFromLatLong_OnClick;
 
             InitialiseLocationManager();
         }
 
-        async void FakeAddressButton_OnClick(object sender, EventArgs e)
+        void GetWeatherFromLatLong_OnClick(object sender, EventArgs e)
         {
-            string message = "";
             double lat;
             bool tryLat = double.TryParse(latInput.Text, out lat);
             double lon;
@@ -59,32 +61,37 @@ namespace GetLocation
             {
                 if (tryLat == false || tryLong == false)
                 {
-                    message = "Unable to determine the address or input is invalid.";
+                    weatherOutput.Text = "Unable to determine the address or input is invalid.";
                 }
                 else
                 {
-                    Geocoder geocoder = new Geocoder(this);
-                    IList<Address> addList = await geocoder.GetFromLocationAsync(lat, lon, 10);
-                    Address add = addList.FirstOrDefault();
+                    IDataProvider dataProvider = DataProvider.DefaultProvider; // ensure only one instance is created using the DataProvider singleton
 
-                    if (add != null)
-                    {
-                        StringBuilder deviceAddress = new StringBuilder();
-                        for (int i = 0; i < add.MaxAddressLineIndex; i++)
-                        {
-                            deviceAddress.Append(add.GetAddressLine(i)).AppendLine(",");
-                        }
-                        fakeAddress.Text = deviceAddress.ToString();
-                    }
-                    else
-                    {
-                        fakeAddress.Text = string.Format("{0}", message);
-                    }
+                    var WeatherData = dataProvider.GetCombinedDataAsync(lat, lon);
+
+                    string weatherString = string.Format("--------------------------------------\r\n" +
+                                                            "Observation Location Details\r\n" +
+                                                            "City \t\t\t{0}\r\n" +
+                                                            "Country \t\t{1}\r\n" +
+                                                            "StationLatitude \t{2}\r\n" +
+                                                            "StationLongitude \t{3}\r\n" +
+                                                            "StationElevation \t{4}\r\n" +
+                                                            "StationID \t\t{5}\r\n" +
+                                                            "WmoNumber \t\t{6}\r\n",
+                                                            WeatherData.Result.observationLocation.City,
+                                                            WeatherData.Result.observationLocation.Country,
+                                                            WeatherData.Result.observationLocation.StationLatitude,
+                                                            WeatherData.Result.observationLocation.StationLongitude,
+                                                            WeatherData.Result.observationLocation.StationElevation,
+                                                            WeatherData.Result.observationLocation.StationID,
+                                                            WeatherData.Result.observationLocation.WmoNumber);
+
+                    weatherOutput.Text = weatherString;
                 }
             }
             catch (Exception ex)
             {
-                fakeAddress.Text = ex.Message;
+                weatherOutput.Text = ex.Message;
             }
         }
 
