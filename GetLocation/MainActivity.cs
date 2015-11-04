@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using WundergroundNetLib.Interfaces;
+using WundergroundNetLib;
+
 namespace GetLocation
 {
     [Activity(Label = "GetLocation", MainLauncher = true, Icon = "@drawable/icon")]
@@ -21,8 +24,10 @@ namespace GetLocation
         TextView _addressText;
         EditText latInput;
         EditText longInput;
-        TextView fakeAddress;
+        TextView _weatherOutput;
         String _locationProvider;
+        Button _btnGetAddress;
+        Button _btnGetWeather;
 
         // collections
         List<Location> visitedLocations;
@@ -36,55 +41,64 @@ namespace GetLocation
 
             _addressText = FindViewById<TextView>(Resource.Id.address_text);
             _locationText = FindViewById<TextView>(Resource.Id.location_text);
-            FindViewById<TextView>(Resource.Id.get_address_button).Click += AddressButton_OnClick;
+            _btnGetAddress = FindViewById<Button>(Resource.Id.btnGetAddress);
+            _btnGetAddress.Click += AddressButton_OnClick;
 
-            // code to fake the address using user entered lat and long values
-            latInput = FindViewById<EditText>(Resource.Id.txtLatInput);
-            longInput = FindViewById<EditText>(Resource.Id.txtLongInput);
-            fakeAddress = FindViewById<TextView>(Resource.Id.fake_address_text);
-            FindViewById<TextView>(Resource.Id.btnFakeAddress).Click += FakeAddressButton_OnClick;
+            _weatherOutput = FindViewById<TextView>(Resource.Id.txtWeatherText);
+            _btnGetWeather = FindViewById<Button>(Resource.Id.btnGetWeather);
+            _btnGetWeather.Click += GetWeatherFromLatLong_OnClick;
 
             InitialiseLocationManager();
         }
 
-        async void FakeAddressButton_OnClick(object sender, EventArgs e)
+        async void GetWeatherFromLatLong_OnClick(object sender, EventArgs e)
         {
-            string message = "";
-            double lat;
-            bool tryLat = double.TryParse(latInput.Text, out lat);
-            double lon;
-            bool tryLong = double.TryParse(longInput.Text, out lon);
+            if (_currentLocation == null)
+            {
+                _weatherOutput.Text = "Can't determine current coordinates.";
+                return;
+            }
 
             try
             {
-                if (tryLat == false || tryLong == false)
+                Geocoder geocoder = new Geocoder(this);
+                IList<Address> addressList = await geocoder.GetFromLocationAsync(_currentLocation.Latitude, _currentLocation.Longitude, 10);
+
+                Address address = addressList.FirstOrDefault();
+
+                if (address != null)
                 {
-                    message = "Unable to determine the address or input is invalid.";
+                    IDataProvider dataProvider = DataProvider.DefaultProvider; // ensure only one instance is created using the DataProvider singleton
+
+                    var WeatherData = dataProvider.GetCombinedDataAsync(address.Latitude, address.Longitude);
+
+                    string weatherString = string.Format("--------------------------------------\r\n" +
+                                                            "Observation Location Details\r\n" +
+                                                            "City \t\t\t{0}\r\n" +
+                                                            "Country \t\t{1}\r\n" +
+                                                            "StationLatitude \t{2}\r\n" +
+                                                            "StationLongitude \t{3}\r\n" +
+                                                            "StationElevation \t{4}\r\n" +
+                                                            "StationID \t\t{5}\r\n" +
+                                                            "WmoNumber \t\t{6}\r\n",
+                                                            WeatherData.Result.observationLocation.City,
+                                                            WeatherData.Result.observationLocation.Country,
+                                                            WeatherData.Result.observationLocation.StationLatitude,
+                                                            WeatherData.Result.observationLocation.StationLongitude,
+                                                            WeatherData.Result.observationLocation.StationElevation,
+                                                            WeatherData.Result.observationLocation.StationID,
+                                                            WeatherData.Result.observationLocation.WmoNumber);
+
+                    _weatherOutput.Text = weatherString;
                 }
                 else
                 {
-                    Geocoder geocoder = new Geocoder(this);
-                    IList<Address> addList = await geocoder.GetFromLocationAsync(lat, lon, 10);
-                    Address add = addList.FirstOrDefault();
-
-                    if (add != null)
-                    {
-                        StringBuilder deviceAddress = new StringBuilder();
-                        for (int i = 0; i < add.MaxAddressLineIndex; i++)
-                        {
-                            deviceAddress.Append(add.GetAddressLine(i)).AppendLine(",");
-                        }
-                        fakeAddress.Text = deviceAddress.ToString();
-                    }
-                    else
-                    {
-                        fakeAddress.Text = string.Format("{0}", message);
-                    }
+                    _weatherOutput.Text = "Can't determine current location.";
                 }
             }
             catch (Exception ex)
             {
-                fakeAddress.Text = ex.Message;
+                _weatherOutput.Text = ex.Message;
             }
         }
 

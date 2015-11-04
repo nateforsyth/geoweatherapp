@@ -9,7 +9,7 @@
         android:text="location"
         android:id="@+id/location_text" />
     <Button
-        android:id="@+id/get_address_button"
+        android:id="@+id/btnGetAddress"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Get Address" />
@@ -60,13 +60,13 @@
             android:id="@+id/txtLongInput" />
     </LinearLayout>
     <Button
-        android:id="@+id/btnFakeAddress"
+        android:id="@+id/btnGetWeather"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Fake Address" />
+        android:text="Get Weather" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="address"
-        android:id="@+id/fake_address_text" />
+        android:id="@+id/txtWeatherText" />
 </LinearLayout>
