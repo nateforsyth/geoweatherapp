@@ -63,12 +63,6 @@ namespace GetLocation
 			// aapt resource value: 0x7f050002
 			public const int address_text = 2131034114;
 			
-			// aapt resource value: 0x7f05000a
-			public const int btnFakeAddress = 2131034122;
-			
-			// aapt resource value: 0x7f05000b
-			public const int fake_address_text = 2131034123;
-			
 			// aapt resource value: 0x7f050001
 			public const int get_address_button = 2131034113;
 			

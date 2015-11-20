@@ -41,52 +41,52 @@ namespace GetLocation
             // code to fake the address using user entered lat and long values
             latInput = FindViewById<EditText>(Resource.Id.txtLatInput);
             longInput = FindViewById<EditText>(Resource.Id.txtLongInput);
-            fakeAddress = FindViewById<TextView>(Resource.Id.fake_address_text);
-            FindViewById<TextView>(Resource.Id.btnFakeAddress).Click += FakeAddressButton_OnClick;
+            //fakeAddress = FindViewById<TextView>(Resource.Id.fake_address_text);
+            //FindViewById<TextView>(Resource.Id.btnFakeAddress).Click += FakeAddressButton_OnClick;
 
             InitialiseLocationManager();
         }
 
-        async void FakeAddressButton_OnClick(object sender, EventArgs e)
-        {
-            string message = "";
-            double lat;
-            bool tryLat = double.TryParse(latInput.Text, out lat);
-            double lon;
-            bool tryLong = double.TryParse(longInput.Text, out lon);
+        //async void FakeAddressButton_OnClick(object sender, EventArgs e)
+        //{
+        //    string message = "";
+        //    double lat;
+        //    bool tryLat = double.TryParse(latInput.Text, out lat);
+        //    double lon;
+        //    bool tryLong = double.TryParse(longInput.Text, out lon);
 
-            try
-            {
-                if (tryLat == false || tryLong == false)
-                {
-                    message = "Unable to determine the address or input is invalid.";
-                }
-                else
-                {
-                    Geocoder geocoder = new Geocoder(this);
-                    IList<Address> addList = await geocoder.GetFromLocationAsync(lat, lon, 10);
-                    Address add = addList.FirstOrDefault();
+        //    try
+        //    {
+        //        if (tryLat == false || tryLong == false)
+        //        {
+        //            message = "Unable to determine the address or input is invalid.";
+        //        }
+        //        else
+        //        {
+        //            Geocoder geocoder = new Geocoder(this);
+        //            IList<Address> addList = await geocoder.GetFromLocationAsync(lat, lon, 10);
+        //            Address add = addList.FirstOrDefault();
 
-                    if (add != null)
-                    {
-                        StringBuilder deviceAddress = new StringBuilder();
-                        for (int i = 0; i < add.MaxAddressLineIndex; i++)
-                        {
-                            deviceAddress.Append(add.GetAddressLine(i)).AppendLine(",");
-                        }
-                        fakeAddress.Text = deviceAddress.ToString();
-                    }
-                    else
-                    {
-                        fakeAddress.Text = string.Format("{0}", message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                fakeAddress.Text = ex.Message;
-            }
-        }
+        //            if (add != null)
+        //            {
+        //                StringBuilder deviceAddress = new StringBuilder();
+        //                for (int i = 0; i < add.MaxAddressLineIndex; i++)
+        //                {
+        //                    deviceAddress.Append(add.GetAddressLine(i)).AppendLine(",");
+        //                }
+        //                fakeAddress.Text = deviceAddress.ToString();
+        //            }
+        //            else
+        //            {
+        //                fakeAddress.Text = string.Format("{0}", message);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        fakeAddress.Text = ex.Message;
+        //    }
+        //}
 
         private void InitialiseLocationManager()
         {

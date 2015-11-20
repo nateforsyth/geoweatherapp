@@ -59,7 +59,7 @@
             android:layout_height="match_parent"
             android:id="@+id/txtLongInput" />
     </LinearLayout>
-    <Button
+<!--<Button
         android:id="@+id/btnFakeAddress"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -68,5 +68,5 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="address"
-        android:id="@+id/fake_address_text" />
+        android:id="@+id/fake_address_text" />-->
 </LinearLayout>
